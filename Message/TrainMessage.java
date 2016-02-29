@@ -5,21 +5,40 @@ public class TrainMessage extends Message {
 
     private float brakeLinePress;  //brake line pressure of train
     private long captureTime;  //time signal was captured
+    private String unitID;
+    private int batteryStatus;
+    private boolean inMotion;
 
     public TrainMessage() {  //default constructor
-        brakeLinePress = "n/a";
+        brakeLinePress = 0.0;  //default to 0
+        captureTime = 0;
+        unitID = "n/a";
+        batteryStatus = 100;
+        inMotion = false;
         time = new Date().getTime();  //current time in sec since epoch
     }
 
-    public TrainMessage(String brakeLinePress) {  //non-default constructor
+    public TrainMessage(float brakeLinePress, String unitID, int batteryStatus, boolean inMotion) {  //non-default constructor
         self.brakeLinePress = brakeLinePress;
-        time = new Date().getTime();
+        captureTime = new Date().getTime();
+        self.unitID = unitID;
+        self.batteryStatus = batteryStatus;
+        self.inMotion = inMotion;
     }
 
     public String render() {
-        String blp =  "Brake Line Pressure: " + brakeLinePress + "\n";  //brake line pressure line
+        String ret =  "Brake Line Pressure: " + brakeLinePress + "\n";  //brake line pressure line
+        ret = ret + "Unit ID: " + unitID + "\n";  //unit ID line
+        ret = ret + "Battery: " + batteryStatus + "\n";  //battery line
+        
+        if(inMotion) {  //determine if in motion
+            ret = ret + "In Motion: True\n";
+        }
+        else {
+            ret = ret + "In Motion: False\n";
+        }
 
-        return blp;
+        return ret;
     }
 
     public convertToFile() {
