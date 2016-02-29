@@ -1,0 +1,8 @@
+Aircraft Registration: 123456
+Flight Id: NCC1701
+Mode: 1
+Message Label: 1
+Block Id: abc
+Ack: nowledge
+Message Number: 42
+Message: I am a fake plane sending a fake packet to an airport!
