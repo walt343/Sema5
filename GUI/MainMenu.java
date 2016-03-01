@@ -13,6 +13,19 @@ public class MainMenu extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
+
+        String directories = {"acars", "isr", "train"};  //check for folders
+        for (String dir:directories) {
+            File toCheck = new File(dir);
+            if (!toCheck.exists()) {  //if dir doesn't exist, create it
+                try {
+                    toCheck.mkdir();  //create folder
+                }
+                catch(SecurityException se) {
+                    System.err.println("CANNOT MAKE DIRECTORY " + dir);
+                }
+            }
+        }
     }
 
     public void goToACARS(View view) {
