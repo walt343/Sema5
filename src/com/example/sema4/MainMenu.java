@@ -25,7 +25,7 @@ public class MainMenu extends Activity {
             File toCheck = new File(Environment.getExternalStorageDirectory().getPath() +"/"+ dir);
             if (!toCheck.exists()) {  //if dir doesn't exist, create it
                     toCheck.mkdirs();  //create folder
-                    File newFile = new File(toCheck, "Hello");
+                    /*File newFile = new File(toCheck, "Hello");
                     try {
 						FileOutputStream f = new FileOutputStream(newFile);
 						String buffer = "world";
@@ -34,7 +34,7 @@ public class MainMenu extends Activity {
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
-					}
+                        }*/
                     
             }
         }
