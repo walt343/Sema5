@@ -8,7 +8,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.m164818.mold.TTActivity"
-    android:id="@+id/ACARS">
+    android:id="@+id/TT">
 
     <TextView
         android:layout_width= "match_parent"
