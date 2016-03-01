@@ -1,5 +1,6 @@
 import java.util.Date;
-import java.text.DateFormat;
+import java.text.*;
+import java.io.*;
 public class AcarsMessage extends Message
 {
     public String AircraftReg;
@@ -10,8 +11,20 @@ public class AcarsMessage extends Message
     public String Ack;
     public int MessageNumber;
     public String Message;
-    private long captureTime;
     
+    public AcarsMessage()
+    {
+        AircraftReg = "Unknown";
+        FlightId = "Unknown";
+        Mode = 0;
+        MessageLabel = 0;
+        BlockId = "";
+        Ack = "";
+        MessageNumber = 0;
+        Message = "";
+        
+        return;
+    }
     public AcarsMessage(String ar, String fi, int m, int ml, String bid, String a, int mn, String ms)
     {
         AircraftReg = ar;
@@ -22,7 +35,7 @@ public class AcarsMessage extends Message
         Ack = a;
         MessageNumber = mn;
         Message = ms;
-        captureTime = new Date().getTime();
+        
         return;
     }
     public String render()
@@ -37,11 +50,24 @@ public class AcarsMessage extends Message
         out = out + "\nMessage: " + Message;
         return out;
     }
-    /*
-    public convertToFile()
+    
+    public void convertToFile()
     {
+        long captureTime = new Date().getTime();
         DateFormat date = new SimpleDateFormat("ddMMMyyyy_hhmmss");
-        String fileName = date.format(captureTime) + ".acars";
+        String fileName = FlightId + date.format(captureTime) + ".acars";
+        fileName = "acars/" + fileName;
+        try
+        {
+            PrintWriter writer = new PrintWriter(fileName, "UTF-8");
+            writer.println(this.render());
+            writer.close();
+        }
+        catch(Exception x)
+        {
+            x.printStackTrace();
+        }
+        
     }
-    */
+    
 }

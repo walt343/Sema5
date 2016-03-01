@@ -1,29 +1,25 @@
 import java.util.Date;
-import java.text.DateFormat;
-
+import java.text.*;
+import java.io.*;
 public class TrainMessage extends Message {
 
-    private float brakeLinePress;  //brake line pressure of train
-    private long captureTime;  //time signal was captured
+    private double brakeLinePress;  //brake line pressure of train
     private String unitID;
     private int batteryStatus;
     private boolean inMotion;
 
     public TrainMessage() {  //default constructor
         brakeLinePress = 0.0;  //default to 0
-        captureTime = 0;
-        unitID = "n/a";
+        unitID = "Unknown";
         batteryStatus = 100;
         inMotion = false;
-        time = new Date().getTime();  //current time in sec since epoch
     }
 
-    public TrainMessage(float brakeLinePress, String unitID, int batteryStatus, boolean inMotion) {  //non-default constructor
-        self.brakeLinePress = brakeLinePress;
-        captureTime = new Date().getTime();
-        self.unitID = unitID;
-        self.batteryStatus = batteryStatus;
-        self.inMotion = inMotion;
+    public TrainMessage(double brakeLinePress, String unitID, int batteryStatus, boolean inMotion) {  //non-default constructor
+        this.brakeLinePress = brakeLinePress;
+        this.unitID = unitID;
+        this.batteryStatus = batteryStatus;
+        this.inMotion = inMotion;
     }
 
     public String render() {
@@ -41,13 +37,22 @@ public class TrainMessage extends Message {
         return ret;
     }
 
-    public convertToFile() {
+    public void convertToFile()
+    {
+        long captureTime = new Date().getTime();
         DateFormat date = new SimpleDateFormat("ddMMMyyyy_hhmmss");
-        String fileName = date.format(captureTime) + "TT.telem";
-
-        //TODO--FIND LOCATION OF DIRECTORY--FROM KEVIN'S WORK
-        FileWriter fout = new FileWriter(fileName);
-        fout.write(render());
-        fout.close();
+        String fileName = unitID + date.format(captureTime) + ".telem";
+        fileName = "train/" + fileName;
+        try
+        {
+            PrintWriter writer = new PrintWriter(fileName, "UTF-8");
+            writer.println(this.render());
+            writer.close();
+        }
+        catch(Exception x)
+        {
+            x.printStackTrace();
+        }
+        
     }
 }
