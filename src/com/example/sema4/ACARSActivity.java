@@ -31,6 +31,21 @@ public class ACARSActivity extends Activity implements View.OnClickListener{
 		{
 			case R.id.acars_capture_button:
 				Toast.makeText(ACARSActivity.this, getText(), Toast.LENGTH_SHORT).show();
+                File newPacket = new File(Environment.getExternalStorageDirectory().getPath() + "/acars/NCC170102Mar16_070314.acars");
+
+                try {
+                    FileOutputStream f = new FileOutputStream(newPacket);
+                    AcarsMessage msg = new AcarsMessage("NCC1701", "74656", 0, 0, "", "ACK", 42, "THIS IS A TEST MESSAGE");
+                    String buffer = msg.render();
+                    f.write(buffer.getBytes());
+                    f.close();
+                }
+                catch (IOException x) {
+                    x.printStackTrace();
+                }
+
+                Toast.makeText(ACARSActivity.this, (String) "Packet Received and saved!" , Toast.LENGTH_SHORT).show();
+                
 				break;
 			case R.id.acars_read_button:
 				 Intent intent = new Intent(ACARSActivity.this, ReadACARS.class);
