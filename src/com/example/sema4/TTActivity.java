@@ -21,7 +21,7 @@ public class TTActivity extends Activity {
     public void onClick(View v) {
         switch(v.getId()) {
             case R.id.tt_capture_button:
-                Toast.makeText(ACARSActivity.this, getText(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(ACARSActivity.this, getText(), Toast.LENGTH_SHORT).show();
                 File newPacket = new File(Environment.getExternalStorageDirectory().getPath() + "/train/A4742D02Mar16_070314.telem");
 
                 try {
