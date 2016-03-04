@@ -30,6 +30,7 @@ public class ISRActivity extends Activity {
 
                 sdr.setFrequency(462610000);  //set to 462.61 MHz for ch 4 on FRS  -- TODO
                 byte[] sample = sdr.getPacket(100);  //sample packet
+                sdr.close();
 
                 if (sdr.returnPacket(sample)) {
                     Toast.makeText(ACARSActivity.this, (String) "Sample is null!", Toast.LENGTH_SHORT).show();
