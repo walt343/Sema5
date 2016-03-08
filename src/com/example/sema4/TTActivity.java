@@ -1,11 +1,21 @@
 package com.example.sema4;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
+import android.text.format.DateFormat;
 import android.view.View;
+import android.widget.Toast;
 
-public class TTActivity extends Activity {
+public class TTActivity extends Activity implements View.OnClickListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,7 +32,9 @@ public class TTActivity extends Activity {
         switch(v.getId()) {
             case R.id.tt_capture_button:
                 //Toast.makeText(ACARSActivity.this, getText(), Toast.LENGTH_SHORT).show();
-                File newPacket = new File(Environment.getExternalStorageDirectory().getPath() + "/train/A4742D02Mar16_070314.telem");
+            	
+                SimpleDateFormat date = new SimpleDateFormat("ddMMMyyyy_hhmmss");
+                File newPacket = new File(Environment.getExternalStorageDirectory().getPath() + "/train/A4742D" + date.format(Calendar.getInstance().getTime()) + ".telem");
 
                 try {
                     FileOutputStream f = new FileOutputStream(newPacket);

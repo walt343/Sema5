@@ -11,8 +11,6 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.view.View;
 
-
-
 public class MainMenu extends Activity {
 
     @Override
@@ -24,18 +22,7 @@ public class MainMenu extends Activity {
         for (String dir:directories) {
             File toCheck = new File(Environment.getExternalStorageDirectory().getPath() +"/"+ dir);
             if (!toCheck.exists()) {  //if dir doesn't exist, create it
-                    toCheck.mkdirs();  //create folder
-                    /*File newFile = new File(toCheck, "Hello");
-                    try {
-						FileOutputStream f = new FileOutputStream(newFile);
-						String buffer = "world";
-						f.write(buffer.getBytes());
-						f.close();
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-                        }*/
-                    
+                    toCheck.mkdirs();  //create folder                    
             }
         }
     }

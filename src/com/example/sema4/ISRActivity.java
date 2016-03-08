@@ -1,14 +1,37 @@
 package com.example.sema4;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.net.Socket;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Toast;
 
-public class ISRActivity extends Activity {
+public class ISRActivity extends Activity implements View.OnClickListener{
 
+	public static final String SERVERIP = "127.0.0.1";
+    public static final int SERVERPORT = 1234;
+    public int FREQ = 101000000;
+    public int running = 0;
+    
+    Intent readAmp = new Intent(Intent.ACTION_VIEW, Uri.parse("iqsrc://-a " + SERVERIP + " -p " + String.valueOf(SERVERPORT) + " -f " + String.valueOf(FREQ) + " -s 1200000"));
+    
+  
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_isr);        
+        setContentView(R.layout.activity_isr);
 
         findViewById(R.id.isr_capture_button).setOnClickListener(this);
         findViewById(R.id.isr_read_button).setOnClickListener(this);
@@ -18,51 +41,78 @@ public class ISRActivity extends Activity {
     	public void onClick(View v) {
 		switch(v.getId())
 		{
-			case R.id.acars_capture_button:
-                RtlsdrSource sdr = new RtlsdrSource("127.0.0.1", 1234);  //init sdr class
-                
-                if (sdr.open(this, this)) {
-                    Toast.makeText(ACARSActivity.this, (String) "Connected to SDR!", Toast.LENGTH_SHORT).show();
-                }
-                else {
-                    Toast.makeText(ACARSActivity.this, (String) "Nope...sorry...", Toast.LENGTH_SHORT).show();
-                }
+			case R.id.isr_capture_button:
+				startActivityForResult(readAmp, 123);
 
-                sdr.setFrequency(462610000);  //set to 462.61 MHz for ch 4 on FRS  -- TODO
-                byte[] sample = sdr.getPacket(100);  //sample packet
-                sdr.close();
-
-                if (sdr.returnPacket(sample)) {
-                    Toast.makeText(ACARSActivity.this, (String) "Sample is null!", Toast.LENGTH_SHORT).show();
-                }
-                else {
-                    long time = System.currntTimeMillis();
-                    String name = "/isr/SAMPLEPACKET" + time;
-                    File newPacket = new File(Environment.getExternalStorageDirectory().getPath() + name);
-                    try {
-                        FileOutputStream f = new FileOutputStream(newPacket);
-                        for (byte b:sample) {
-                            f.write(b);
-                        }
-                        f.close();
-                    }
-                    catch (IOExcpetion e) {
-                        Toast.makeText(ACARSActivity.this, (String) "EXCEPTION WHEN WRITING!!!", Toast.LENGTH_SHORT).show();
-                        e.printStackTrace();
-                    }
-                }
-                    
-                
 				break;
-			case R.id.acars_read_button:
+			case R.id.isr_read_button:
 				 Intent intent = new Intent(ISRActivity.this, ReadISR.class);
-			        startActivity(intent);
+			     startActivity(intent);
 				break;
-			case R.id.acars_save_button:
-				Toast.makeText(ACARSActivity.this, (String) "save", Toast.LENGTH_SHORT).show();
+			case R.id.isr_save_button:
+				new listenForTCP().execute();
+
+				//Toast.makeText(ISRActivity.this, (String) "save", Toast.LENGTH_SHORT).show();
 				break;
 			default:
 				break;
 		}
 	}
+    	
+    	  @Override
+    	    protected void onActivityResult(final int requestCode, final int resultCode, final Intent data){
+    	        runOnUiThread(new Runnable() {
+    	            @Override
+    	            public void run() {
+    	                if(requestCode==123){
+    	                    if(resultCode==RESULT_OK) {
+    	                    	Toast.makeText(ISRActivity.this, (String) "Connected to SDR!", Toast.LENGTH_SHORT).show();
+    	                    }
+    	                    else {
+    	                    	Toast.makeText(ISRActivity.this, (String) "Error, can't start RTL_TCP", Toast.LENGTH_SHORT).show();
+    	                    }
+    	                }
+    	            }
+    	        });
+    	    }
+    	    
+    	    private class listenForTCP extends AsyncTask<String, Void, String > {
+    	    	public byte samples[];
+    	    	
+    	        protected String doInBackground(String... ip) {
+    	        	samples = new byte[204800];
+    	        	boolean run = true;
+    	            try {
+	            		Socket socket = new Socket(SERVERIP, SERVERPORT);
+	            		while(run == true) {
+	            			socket.getInputStream().read(samples, 0, 204800);
+	            		}
+	            		socket.close();
+    	            }catch (IOException e) {
+       					Toast.makeText(ISRActivity.this, (String) "ERROR", Toast.LENGTH_SHORT).show();
+    	            }
+    	            return "No longer reading. ";
+    	        }
+    	        
+    	        protected void onProgressUpdate(Void... temp) {
+    	        }
+    	        
+    	        protected void onPostExecute(String result){
+    	        	//Toast.makeText(ISRActivity.this, (String) "Capture complete", Toast.LENGTH_SHORT).show();
+
+    				//SimpleDateFormat date = new SimpleDateFormat("ddMMMyyyy_hhmmss");
+    				//File newPacket = new File(Environment.getExternalStorageDirectory().getPath() + "/isr/" + date.format(Calendar.getInstance().getTime()) + ".isr");
+    	                
+    				 
+    				/*TODO: write samples to file*/
+    				 
+    				 if(samples == null)
+    					 Toast.makeText(ISRActivity.this, (String) "Empty File Created", Toast.LENGTH_SHORT).show();
+    				 else
+    					 Toast.makeText(ISRActivity.this, (String) "Something Was Captured", Toast.LENGTH_SHORT).show();
+
+                    
+    	        }
+    	    }
+
 }

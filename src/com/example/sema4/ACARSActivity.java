@@ -1,8 +1,15 @@
 package com.example.sema4;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.View;
 import android.widget.Toast;
 
@@ -30,8 +37,10 @@ public class ACARSActivity extends Activity implements View.OnClickListener{
 		switch(v.getId())
 		{
 			case R.id.acars_capture_button:
-				Toast.makeText(ACARSActivity.this, getText(), Toast.LENGTH_SHORT).show();
-                File newPacket = new File(Environment.getExternalStorageDirectory().getPath() + "/acars/NCC170102Mar16_070314.acars");
+				//Toast.makeText(ACARSActivity.this, getText(), Toast.LENGTH_SHORT).show();
+				
+				SimpleDateFormat date = new SimpleDateFormat("ddMMMyyyy_hhmmss");
+                File newPacket = new File(Environment.getExternalStorageDirectory().getPath() + "/acars/NCC170102" + date.format(Calendar.getInstance().getTime()) + ".acars");
 
                 try {
                     FileOutputStream f = new FileOutputStream(newPacket);
