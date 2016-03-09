@@ -22,32 +22,56 @@
         android:textAlignment="center" />
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
         android:layout_below="@+id/titleText"
-        android:layout_alignParentStart="true">
+        android:orientation="vertical" >
 
         <Button
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="Capture"
             android:id="@+id/isr_capture_button"
-            android:layout_gravity="center_horizontal" />
-
-        <Button
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Read"
+            android:layout_gravity="center_horizontal"
+            android:text="Capture" />
+
+        <Button
             android:id="@+id/isr_read_button"
-            android:layout_gravity="center_horizontal" />
-
-        <Button
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Save"
+            android:layout_gravity="center_horizontal"
+            android:text="Read" />
+
+        <Button
             android:id="@+id/isr_save_button"
-            android:layout_gravity="center_horizontal" />
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="Save" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <EditText
+                android:id="@+id/freqBox"
+                android:layout_width="149dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:inputType="numberDecimal" >
+
+                <requestFocus />
+            </EditText>
+
+            <Button
+                android:id="@+id/setFreqButton"
+                android:layout_width="152dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Set Frequency" />
+        </LinearLayout>
+
     </LinearLayout>
 
 </RelativeLayout>

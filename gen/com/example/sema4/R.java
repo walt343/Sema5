@@ -38,28 +38,30 @@ public final class R {
     }
     public static final class id {
         public static final int ACARS=0x7f0a0001;
-        public static final int ACARS_Button=0x7f0a000b;
+        public static final int ACARS_Button=0x7f0a000d;
         public static final int ACARS_list=0x7f0a0000;
         public static final int ACARS_message=0x7f0a0002;
-        public static final int ISR_Button=0x7f0a000d;
-        public static final int TT=0x7f0a0015;
-        public static final int TT_Button=0x7f0a000c;
-        public static final int TT_message=0x7f0a0016;
+        public static final int ISR_Button=0x7f0a000f;
+        public static final int TT=0x7f0a0017;
+        public static final int TT_Button=0x7f0a000e;
+        public static final int TT_message=0x7f0a0018;
         public static final int acars_capture_button=0x7f0a0004;
         public static final int acars_read_button=0x7f0a0005;
         public static final int acars_save_button=0x7f0a0006;
-        public static final int file_name=0x7f0a0012;
-        public static final int inputSearch=0x7f0a0013;
+        public static final int file_name=0x7f0a0014;
+        public static final int freqBox=0x7f0a000a;
+        public static final int inputSearch=0x7f0a0015;
         public static final int isr_capture_button=0x7f0a0007;
         public static final int isr_read_button=0x7f0a0008;
         public static final int isr_save_button=0x7f0a0009;
-        public static final int list=0x7f0a0014;
-        public static final int settings_button=0x7f0a000e;
-        public static final int textView=0x7f0a000a;
+        public static final int list=0x7f0a0016;
+        public static final int setFreqButton=0x7f0a000b;
+        public static final int settings_button=0x7f0a0010;
+        public static final int textView=0x7f0a000c;
         public static final int titleText=0x7f0a0003;
-        public static final int tt_capture_button=0x7f0a000f;
-        public static final int tt_read_button=0x7f0a0010;
-        public static final int tt_save_button=0x7f0a0011;
+        public static final int tt_capture_button=0x7f0a0011;
+        public static final int tt_read_button=0x7f0a0012;
+        public static final int tt_save_button=0x7f0a0013;
     }
     public static final class layout {
         public static final int acars_dir=0x7f040000;
