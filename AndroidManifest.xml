@@ -3,12 +3,14 @@
     package="com.example.sema4" android:installLocation="auto">
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+    
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
-        android:label="@string/app_name"
-        android:supportsRtl="true">
-        <activity android:name=".MainMenu">
+        android:label="@string/app_name">
+        <activity android:name=".MainMenu"
+            android:windowSoftInputMode="stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -20,6 +22,10 @@
         <activity android:name=".ISRActivity" />
         <activity android:name=".ReadACARS" />
         <activity android:name=".ShowACARS" />
+         <activity android:name=".ReadISR" />
+        <activity android:name=".ShowISR" />
+         <activity android:name=".ReadTT" />
+        <activity android:name=".ShowTT" />
     </application>
 
 </manifest>

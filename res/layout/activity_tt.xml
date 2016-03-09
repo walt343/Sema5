@@ -32,21 +32,21 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="Capture"
-            android:id="@+id/capture_button"
+            android:id="@+id/tt_capture_button"
             android:layout_gravity="center_horizontal" />
 
         <Button
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="Read"
-            android:id="@+id/read_button"
+            android:id="@+id/tt_read_button"
             android:layout_gravity="center_horizontal" />
 
         <Button
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="Save"
-            android:id="@+id/save_button"
+            android:id="@+id/tt_save_button"
             android:layout_gravity="center_horizontal" />
     </LinearLayout>
 
