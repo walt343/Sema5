@@ -1,7 +1,7 @@
 package com.example.sema4;
 
-import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.Socket;
@@ -15,14 +15,13 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.Toast;
 
 public class ISRActivity extends Activity implements View.OnClickListener{
 
 	public static final String SERVERIP = "127.0.0.1";
     public static final int SERVERPORT = 1234;
-    public int FREQ = 101000000;
+    public int FREQ = 462610000;  //462.61 MHz = FRS Channel 4
     public int running = 0;
     
     Intent readAmp = new Intent(Intent.ACTION_VIEW, Uri.parse("iqsrc://-a " + SERVERIP + " -p " + String.valueOf(SERVERPORT) + " -f " + String.valueOf(FREQ) + " -s 1200000"));
@@ -51,6 +50,7 @@ public class ISRActivity extends Activity implements View.OnClickListener{
 				break;
 			case R.id.isr_save_button:
 				new listenForTCP().execute();
+				Toast.makeText(ISRActivity.this, (String) "HERE!!!", Toast.LENGTH_SHORT).show();
 
 				//Toast.makeText(ISRActivity.this, (String) "save", Toast.LENGTH_SHORT).show();
 				break;
@@ -81,11 +81,13 @@ public class ISRActivity extends Activity implements View.OnClickListener{
     	    	
     	        protected String doInBackground(String... ip) {
     	        	samples = new byte[204800];
-    	        	boolean run = true;
+    	        	int cntr = 0;
     	            try {
 	            		Socket socket = new Socket(SERVERIP, SERVERPORT);
-	            		while(run == true) {
+	            		while(cntr<8) {
 	            			socket.getInputStream().read(samples, 0, 204800);
+	            			publishProgress();
+	            			cntr++;
 	            		}
 	            		socket.close();
     	            }catch (IOException e) {
@@ -95,10 +97,12 @@ public class ISRActivity extends Activity implements View.OnClickListener{
     	        }
     	        
     	        protected void onProgressUpdate(Void... temp) {
+    	        	//Toast.makeText(ISRActivity.this, (String) "HERE in update", Toast.LENGTH_SHORT).show();
+    	        	Toast.makeText(ISRActivity.this, (String) "HERE in update", Toast.LENGTH_SHORT).show();
     	        }
     	        
     	        protected void onPostExecute(String result){
-    	        	//Toast.makeText(ISRActivity.this, (String) "Capture complete", Toast.LENGTH_SHORT).show();
+    	        	Toast.makeText(ISRActivity.this, (String) "Capture complete", Toast.LENGTH_SHORT).show();
 
     				//SimpleDateFormat date = new SimpleDateFormat("ddMMMyyyy_hhmmss");
     				//File newPacket = new File(Environment.getExternalStorageDirectory().getPath() + "/isr/" + date.format(Calendar.getInstance().getTime()) + ".isr");
@@ -108,8 +112,22 @@ public class ISRActivity extends Activity implements View.OnClickListener{
     				 
     				 if(samples == null)
     					 Toast.makeText(ISRActivity.this, (String) "Empty File Created", Toast.LENGTH_SHORT).show();
-    				 else
+    				 else {
     					 Toast.makeText(ISRActivity.this, (String) "Something Was Captured", Toast.LENGTH_SHORT).show();
+    					 SimpleDateFormat date = new SimpleDateFormat("ddMMMyyyy_hhmmss");
+    		             File newPacket = new File(Environment.getExternalStorageDirectory().getPath() + "/isr/" + date.format(Calendar.getInstance().getTime()) + ".isr");
+    		             try {
+							FileOutputStream f = new FileOutputStream(newPacket);
+							 f.write(samples);
+							 f.close();
+						} catch (FileNotFoundException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+    				 }
 
                     
     	        }
