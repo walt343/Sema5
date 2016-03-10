@@ -54,7 +54,7 @@
             android:layout_height="wrap_content" >
 
             <EditText
-                android:id="@+id/freqBox"
+                android:id="@+id/isr_freq_box"
                 android:layout_width="149dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -65,7 +65,7 @@
             </EditText>
 
             <Button
-                android:id="@+id/setFreqButton"
+                android:id="@+id/isr_freq_button"
                 android:layout_width="152dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"

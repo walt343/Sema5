@@ -15,6 +15,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 
 public class ISRActivity extends Activity implements View.OnClickListener{
@@ -23,7 +24,7 @@ public class ISRActivity extends Activity implements View.OnClickListener{
     public static final int SERVERPORT = 1234;
     public int FREQ = 462610000;  //462.61 MHz = FRS Channel 4
     
-    Intent readAmp = new Intent(Intent.ACTION_VIEW, Uri.parse("iqsrc://-a " + SERVERIP + " -p " + String.valueOf(SERVERPORT) + " -f " + String.valueOf(FREQ) + " -s 1200000"));
+    //Intent readAmp = new Intent(Intent.ACTION_VIEW, Uri.parse("iqsrc://-a " + SERVERIP + " -p " + String.valueOf(SERVERPORT) + " -f " + String.valueOf(FREQ) + " -s 1200000"));
     
   
     @Override
@@ -34,12 +35,14 @@ public class ISRActivity extends Activity implements View.OnClickListener{
         findViewById(R.id.isr_capture_button).setOnClickListener(this);
         findViewById(R.id.isr_read_button).setOnClickListener(this);
         findViewById(R.id.isr_save_button).setOnClickListener(this);
+        findViewById(R.id.isr_freq_button).setOnClickListener(this);
     }
 
     	public void onClick(View v) {
 		switch(v.getId())
 		{
 			case R.id.isr_capture_button:
+			    Intent readAmp = new Intent(Intent.ACTION_VIEW, Uri.parse("iqsrc://-a " + SERVERIP + " -p " + String.valueOf(SERVERPORT) + " -f " + String.valueOf(FREQ) + " -s 1200000"));
 				startActivityForResult(readAmp, 123);
 
 				break;
@@ -52,6 +55,17 @@ public class ISRActivity extends Activity implements View.OnClickListener{
 				Toast.makeText(ISRActivity.this, (String) "Started reading from SDR", Toast.LENGTH_SHORT).show();
 
 				//Toast.makeText(ISRActivity.this, (String) "save", Toast.LENGTH_SHORT).show();
+				break;
+			case R.id.isr_freq_button:
+				//change FREQ
+				EditText newFreqBox = (EditText) findViewById(R.id.isr_freq_box);
+				float newFreq = Float.parseFloat(newFreqBox.getText().toString());  //get num from box
+				
+				//assuming number is >100MHz and <1000MHz
+				int flToIntFreq = (int)(newFreq * 1000000);
+				FREQ = flToIntFreq;  //change frequency
+				Toast.makeText(ISRActivity.this, (String) "Tuned to " + newFreq + " MHz", Toast.LENGTH_SHORT).show();
+
 				break;
 			default:
 				break;

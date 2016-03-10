@@ -24,7 +24,7 @@ public class TTActivity extends Activity implements View.OnClickListener {
     public static final int SERVERPORT = 1234;
     public int FREQ = 457937500;  //457.9375 MHz
 	
-	Intent readAmp = new Intent(Intent.ACTION_VIEW, Uri.parse("iqsrc://-a " + SERVERIP + " -p " + String.valueOf(SERVERPORT) + " -f " + String.valueOf(FREQ) + " -s 1200000"));
+	//Intent readAmp = new Intent(Intent.ACTION_VIEW, Uri.parse("iqsrc://-a " + SERVERIP + " -p " + String.valueOf(SERVERPORT) + " -f " + String.valueOf(FREQ) + " -s 1200000"));
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +41,7 @@ public class TTActivity extends Activity implements View.OnClickListener {
         switch(v.getId()) {
             case R.id.tt_capture_button:
                 //Toast.makeText(ACARSActivity.this, getText(), Toast.LENGTH_SHORT).show();
-            	
+            	Intent readAmp = new Intent(Intent.ACTION_VIEW, Uri.parse("iqsrc://-a " + SERVERIP + " -p " + String.valueOf(SERVERPORT) + " -f " + String.valueOf(FREQ) + " -s 1200000"));
             	startActivityForResult(readAmp, 123);
 
                 //Toast.makeText(TTActivity.this, (String) "Packet Received and saved!" , Toast.LENGTH_SHORT).show();

@@ -27,7 +27,7 @@ public class ACARSActivity extends Activity implements View.OnClickListener{
     public static final int SERVERPORT = 1234;
     public int FREQ = 131550000;  //131.550 MHz = ACARS
     
-    Intent readAmp = new Intent(Intent.ACTION_VIEW, Uri.parse("iqsrc://-a " + SERVERIP + " -p " + String.valueOf(SERVERPORT) + " -f " + String.valueOf(FREQ) + " -s 1200000"));
+    //Intent readAmp = new Intent(Intent.ACTION_VIEW, Uri.parse("iqsrc://-a " + SERVERIP + " -p " + String.valueOf(SERVERPORT) + " -f " + String.valueOf(FREQ) + " -s 1200000"));
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +64,7 @@ public class ACARSActivity extends Activity implements View.OnClickListener{
                 }
 
                 Toast.makeText(ACARSActivity.this, (String) "Packet Received and saved!" , Toast.LENGTH_SHORT).show();*/
-                
+				Intent readAmp = new Intent(Intent.ACTION_VIEW, Uri.parse("iqsrc://-a " + SERVERIP + " -p " + String.valueOf(SERVERPORT) + " -f " + String.valueOf(FREQ) + " -s 1200000"));
 				startActivityForResult(readAmp, 123);
 				
 				break;

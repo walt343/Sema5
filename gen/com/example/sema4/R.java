@@ -49,13 +49,13 @@ public final class R {
         public static final int acars_read_button=0x7f0a0005;
         public static final int acars_save_button=0x7f0a0006;
         public static final int file_name=0x7f0a0014;
-        public static final int freqBox=0x7f0a000a;
         public static final int inputSearch=0x7f0a0015;
         public static final int isr_capture_button=0x7f0a0007;
+        public static final int isr_freq_box=0x7f0a000a;
+        public static final int isr_freq_button=0x7f0a000b;
         public static final int isr_read_button=0x7f0a0008;
         public static final int isr_save_button=0x7f0a0009;
         public static final int list=0x7f0a0016;
-        public static final int setFreqButton=0x7f0a000b;
         public static final int settings_button=0x7f0a0010;
         public static final int textView=0x7f0a000c;
         public static final int titleText=0x7f0a0003;
