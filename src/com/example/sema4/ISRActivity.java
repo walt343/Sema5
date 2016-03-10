@@ -22,7 +22,6 @@ public class ISRActivity extends Activity implements View.OnClickListener{
 	public static final String SERVERIP = "127.0.0.1";
     public static final int SERVERPORT = 1234;
     public int FREQ = 462610000;  //462.61 MHz = FRS Channel 4
-    public int running = 0;
     
     Intent readAmp = new Intent(Intent.ACTION_VIEW, Uri.parse("iqsrc://-a " + SERVERIP + " -p " + String.valueOf(SERVERPORT) + " -f " + String.valueOf(FREQ) + " -s 1200000"));
     
@@ -50,7 +49,7 @@ public class ISRActivity extends Activity implements View.OnClickListener{
 				break;
 			case R.id.isr_save_button:
 				new listenForTCP().execute();
-				Toast.makeText(ISRActivity.this, (String) "HERE!!!", Toast.LENGTH_SHORT).show();
+				Toast.makeText(ISRActivity.this, (String) "Started reading from SDR", Toast.LENGTH_SHORT).show();
 
 				//Toast.makeText(ISRActivity.this, (String) "save", Toast.LENGTH_SHORT).show();
 				break;
