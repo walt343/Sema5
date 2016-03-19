@@ -1,0 +1,9 @@
+From RFAnalyzer:
+	 RtlsdrSource.mixPacketIntoSamplePacket() -- Figure out how to do this, then lift from there
+	 Line 452-454: public int mixPacketIntoSamplePacket(byte[] packet, SamplePacket samplePacket, long channelFrequency) {
+		return this.iqConverter.mixPacketIntoSamplePacket(packet, samplePacket, channelFrequency);
+	}
+
+Import IQConverter and Unsigned8BitIQConverter from RFA
+
+-Send SamplePacket to scheduler for demod
