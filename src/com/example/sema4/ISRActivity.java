@@ -23,6 +23,7 @@ public class ISRActivity extends Activity implements View.OnClickListener{
 	public static final String SERVERIP = "127.0.0.1";
     public static final int SERVERPORT = 1234;
     public int FREQ = 462610000;  //462.61 MHz = FRS Channel 4
+    private IQConverter iqconvert = new Unsigned8BitIQConverter();
     
     //Intent readAmp = new Intent(Intent.ACTION_VIEW, Uri.parse("iqsrc://-a " + SERVERIP + " -p " + String.valueOf(SERVERPORT) + " -f " + String.valueOf(FREQ) + " -s 1200000"));
     
@@ -42,6 +43,7 @@ public class ISRActivity extends Activity implements View.OnClickListener{
 		switch(v.getId())
 		{
 			case R.id.isr_capture_button:
+				iqconvert.setFrequency((long) FREQ);  //set iq converter to desired frequency
 			    Intent readAmp = new Intent(Intent.ACTION_VIEW, Uri.parse("iqsrc://-a " + SERVERIP + " -p " + String.valueOf(SERVERPORT) + " -f " + String.valueOf(FREQ) + " -s 1200000"));
 				startActivityForResult(readAmp, 123);
 
@@ -93,12 +95,15 @@ public class ISRActivity extends Activity implements View.OnClickListener{
     	    	public byte samples[];
     	    	
     	        protected String doInBackground(String... ip) {
-    	        	samples = new byte[204800];
+    	        	samples = new byte[1024];
     	        	int cntr = 0;
     	            try {
 	            		Socket socket = new Socket(SERVERIP, SERVERPORT);
 	            		while(cntr<8) {
-	            			socket.getInputStream().read(samples, 0, 204800);
+	            			socket.getInputStream().read(samples, 0, 1024);
+	            			/*SamplePacket aPkt = new SamplePacket(samples.length/8);
+	            			iqconvert.mixPacketIntoSamplePacket(samples, aPkt, FREQ);  //mix sample to sample packet
+	            			Toast.makeText(ISRActivity.this, aPkt.toString(), Toast.LENGTH_SHORT).show();*/
 	            			publishProgress();
 	            			cntr++;
 	            		}
@@ -111,7 +116,9 @@ public class ISRActivity extends Activity implements View.OnClickListener{
     	        
     	        protected void onProgressUpdate(Void... temp) {
     	        	//Toast.makeText(ISRActivity.this, (String) "HERE in update", Toast.LENGTH_SHORT).show();
-    	        	Toast.makeText(ISRActivity.this, (String) "HERE in update", Toast.LENGTH_SHORT).show();
+    	        	SamplePacket aPkt = new SamplePacket(samples.length/8);
+        			iqconvert.mixPacketIntoSamplePacket(samples, aPkt, (long) FREQ);  //mix sample to sample packet
+        			Toast.makeText(ISRActivity.this, aPkt.toString(), Toast.LENGTH_SHORT).show();
     	        }
     	        
     	        protected void onPostExecute(String result){
